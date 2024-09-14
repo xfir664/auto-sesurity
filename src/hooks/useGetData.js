@@ -1,22 +1,19 @@
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
-export function useGetData(fetchUrl) {
-    const url = fetchUrl;
+export function useGetData() {
+    const isLoader = ref(false); 
+    const error = ref(null); 
     const data = ref([]);
-    const isLoader = ref("false");
-    const error = ref("null"); // Для хранения сообщений об ошибках, если это необходимо
-    let dataValue = ref([]);
 
-    const getData = async () => {
+    const getData = async (fetchUrl) => {
         isLoader.value = true;
         error.value = null; // Сбрасываем ошибку перед запросом
         try {
-            const response = await fetch(url);
+            const response = await fetch(fetchUrl);
             if (!response.ok) {
                 throw new Error(`Ошибка HTTP! статус: ${response.status}`);
             }
-            // data.value = await response.json();
-            dataValue.value = await response.json();
+            data.value = await response.json();
         } catch (err) {
             console.error('Не удалось получить данные:', err);
             error.value = err.message; // Сохраняем сообщение об ошибке
@@ -24,13 +21,8 @@ export function useGetData(fetchUrl) {
             isLoader.value = false; // Обеспечиваем отключение загрузчика
         }
     };
-    
-    onMounted(getData);
 
-    console.log(dataValue.value, 'ret');
-
-
-    return { data, isLoader, error, dataValue };
+    return { isLoader, error, data, getData};
 }
 
 export default useGetData

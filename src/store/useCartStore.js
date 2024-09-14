@@ -5,22 +5,20 @@ import { ref } from 'vue'
 const BASE_URL = "https://jsonplaceholder.typicode.com/photos?_limit=10";
 
 const useCartsStore = defineStore('cartsStore', () => {
-    let cards = [];
-    let isCardLoaded = false;
-    let cardError = null;
+    const cards = ref([]);
+    const error = ref(null); 
+    const isLoader = ref(false);
 
-    if(cards.length === 0) {
-        const { data, isLoader, error, dataValue} = useGetData(BASE_URL);
-        cards = data.value.value;
-        console.log(dataValue, 'datadataValue');
-        // console.log(data, 'data');
-        // console.log(data.value, 'dta');
-        // console.log(cards,'valueee');
-        isCardLoaded = isLoader;
-        cardError = error;
+    if(cards.value.length === 0) {
+        const data = useGetData();
+        data.getData(BASE_URL)
+        cards.value = data.data;
+        console.log(cards.value);
+        error.value = data.error
+        isLoader.value = data.isLoader
     }
 
-    return { cards, isCardLoaded, cardError }
+    return { cards, error, isLoader }
 })
 
 export default useCartsStore;

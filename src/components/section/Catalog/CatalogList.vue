@@ -1,6 +1,6 @@
 <template>
-    <ul class="catalog-list" v-if="isLoaded">
-        <li class="catalog-item" v-for="item in cards " :key="item.id">
+    <ul class="catalog-list" v-if="store.isLoader">
+        <li class="catalog-item" v-for="item in store.cards.value " :key="item.id">
             <catalog-item :item="item" />
         </li>
     </ul>
@@ -10,7 +10,7 @@
 import CatalogItem from '@/components/section/Catalog/CatalogItem.vue';
 import useCartsStore from '@/store/useCartStore';
 
-const { cards, isLoaded, error } = useCartsStore()
+const store = useCartsStore()
 
 </script>
 <style>
