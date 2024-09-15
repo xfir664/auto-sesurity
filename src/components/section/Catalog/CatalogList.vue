@@ -1,6 +1,6 @@
 <template>
     <ul class="catalog-list" v-if="store.isLoader">
-        <li class="catalog-item" v-for="item in store.cards.value " :key="item.id">
+        <li class="catalog-item" v-for="item in store.cards " :key="item.id">
             <catalog-item :item="item" />
         </li>
     </ul>

@@ -1,9 +1,9 @@
 import { ref } from 'vue';
 
 export function useGetData() {
-    const isLoader = ref(false); 
-    const error = ref(null); 
-    const data = ref([]);
+    let isLoader = ref(false); 
+    let error = ref(null); 
+    let data = ref([]);
 
     const getData = async (fetchUrl) => {
         isLoader.value = true;

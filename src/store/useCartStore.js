@@ -9,14 +9,18 @@ const useCartsStore = defineStore('cartsStore', () => {
     const error = ref(null); 
     const isLoader = ref(false);
 
-    if(cards.value.length === 0) {
+    const setData = async () => {
         const data = useGetData();
-        data.getData(BASE_URL)
-        cards.value = data.data;
-        console.log(cards.value);
-        error.value = data.error
-        isLoader.value = data.isLoader
+        await data.getData(BASE_URL);
+        cards.value = data.data.value;
+        cards.value.forEach(el => {
+            el.count = 1;
+        })
+        error.value = data.error;
+        isLoader.value = data.isLoader;
     }
+
+    setData();
 
     return { cards, error, isLoader }
 })

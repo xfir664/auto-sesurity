@@ -6,18 +6,21 @@
             </router-link>
         </div>
         <main-nav-list></main-nav-list>
+        <router-link to="/carzina">
+            <div>корзинa</div>
+            <div v-if="corzinaStore.length !== 0">
+                {{ corzinaStore.length }}
+            </div>
+        </router-link>
     </nav>
 </template>
-<script>
-
+<script setup>
 import MainNavList from './MainNavList.vue'
+import useCorzinaStore from '@/store/useCorzinaStore.js'
+
+const { corzinaStore } = useCorzinaStore();
 
 
-export default {
-    components: {
-        MainNavList
-    }
-}
 </script>
 <style>
     .nav {
